@@ -1,0 +1,1 @@
+获取checkebox的值：$(id).is(:checked)

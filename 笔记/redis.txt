@@ -1,0 +1,6 @@
+开启服务： redis-server.exe
+开启客户端：redis-cli.exe
+查看密码命令：config get requirepass
+提示：config get requirepass 表示没有权限
+输入密码命令：auth yourpassword
+设置密码：config set requirepass yourpassword
