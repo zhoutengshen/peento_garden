@@ -1,6 +1,10 @@
 module.exports = {
     'home':"/",
-    'login':'/login',
+    'apiLogin':'/api/login',
+    'apiCheckAccount':'/api/check/account',
+    'apiGetMobileCode':'/api/mobilecode',
+    'loginPage':'/login',
     'logout':"/logout",
-    'reg':"/reg"
+    'reg':"/reg",
+
 }

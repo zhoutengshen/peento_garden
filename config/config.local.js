@@ -16,3 +16,14 @@ exports.session = {
     httpOnly: true,
     encrypt: false
 };
+exports.security = {
+    csrf: {
+        enable: false,
+        ignoreJSON: true
+    },
+    domainWhiteList: [ 'http://http://localhost:8080' ],
+};
+exports.cors = {
+    origin:'*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+};
