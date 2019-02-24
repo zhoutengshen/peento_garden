@@ -204,6 +204,7 @@ class Login extends Controller {
     }
 
 
+
     //表单校验
     formValidated(formData) {
         const rules = {

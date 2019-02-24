@@ -37,6 +37,17 @@ class User extends Service {
     async findAccByUserName(userName) {
 
     }
+
+    async create(user) {
+        const {ctx} = this;
+        const {model} = ctx;
+        user.account = Math.random().toString().slice(-10);//随机账号
+        user.status = 1;
+        let timeStamp = new Date().getTime();
+        user.created_at = timeStamp
+        user.updated_at = timeStamp;
+        return await model.User.create({...user});
+    }
 }
 
 module.exports = User;

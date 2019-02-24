@@ -17,5 +17,6 @@ module.exports = app => {
 
     //reg
     router.get(routerUrl.reg, controller.register.index);
+    router.post(routerUrl.apiRegister,controller.register.register);
 };
 
