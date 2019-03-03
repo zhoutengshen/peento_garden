@@ -34,12 +34,19 @@ class Login extends Controller {
             ctx.logger.debug(`\r\n输出位置：${__filename} 表单校验不通过;${JSON.stringify(error)}`);
             return;
         }
+        const queryObj = {// 查询条件
+        };
+        if (accountType != ACCOUNT_TYPE.mobileCode) {//密码登录查询条件
+            queryObj.password = password;
+        }
 
         //验证码登录
         if (accountType == ACCOUNT_TYPE.mobileCode) {
+            queryObj.mobile = account;
             try {
                 let mobileCode = ctx.session.lastMobileCode[account].mobileCode;
                 if (!!mobileCode && mobileCode == password) {//登录成功
+                    ctx.session.lastMobileCode[account] = null;
                     loginSuccess = true;
                 } else {
                     ctx.body = {//设置返回的json
@@ -57,26 +64,16 @@ class Login extends Controller {
                 }
                 return;
             }
-        }
-        const queryObj = {// 查询条件
-        };
-
-        if (accountType != ACCOUNT_TYPE.mobileCode) {//密码登录查询条件
-            queryObj.password = password;
-        }
-
-        if (accountType == ACCOUNT_TYPE.username) {
+        }else if (accountType == ACCOUNT_TYPE.username) {
             queryObj.username = account;
         } else if (accountType == ACCOUNT_TYPE.email) {
             queryObj.email = account;
-        } else if (accountType == ACCOUNT_TYPE.mobile || accountType == ACCOUNT_TYPE.mobile) {
+        } else if (accountType == ACCOUNT_TYPE.mobile) {
             queryObj.mobile = account;
         } else {
             queryObj.account = account;
         }
-
         const user = await ctx.service.user.findAccPass(queryObj);
-
         if (!user) {//不匹配
             ctx.set("Content-Type", "application/json");
             ctx.status = 406;//设置状态吗
@@ -85,22 +82,27 @@ class Login extends Controller {
                 code: 40006,
                 msg: "登录失败，密码或者账号名错误"
             }
+            return;
         } else {//登录成功
             loginSuccess = true;
         }
+
         if (loginSuccess) {
             ctx.logger.debug(`\r\n$输出位置：${__filename}\r\n登录成功`);
             ctx.session.user = user;
             if (rememberMe) {//用户点击了记住我，cookie 一个月后过期
                 ctx.session.maxAge = 30 * 24 * 60 * 60 * 1000;
             }
-            ctx.set("Content-Type", "application/json");
             ctx.status = 200;//设置状态吗
             ctx.body = {//设置返回的json
                 success: true,
                 code: 10001,
                 msg: "登录成功",
-                location: "/"
+                location: "/",
+                user: {
+                    username: user.username,
+                    avatarUrl: user.avatar_url
+                }
             }
         }
     }
@@ -153,6 +155,7 @@ class Login extends Controller {
     //获取手机验证码
     async getMobileCode() {
         const {ctx} = this;
+        console.log(ctx.session.user);
         const {mobileNum} = ctx.request.query;
         ctx.logger.debug('\r\n手机号码为' + mobileNum);
         if (!mobileNum) {
@@ -202,7 +205,6 @@ class Login extends Controller {
             }
         }
     }
-
 
 
     //表单校验

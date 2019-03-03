@@ -5,7 +5,7 @@ module.exports = {
     'apiGetMobileCode':'/api/mobilecode',
     'apiRegister':'/api/register',
     'loginPage':'/login',
-    'logout':"/logout",
+    'logout':"/api/logout",
     'reg':"/reg",
 
 }

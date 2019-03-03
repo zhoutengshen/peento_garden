@@ -17,16 +17,6 @@ module.exports = option => {
                 }
                 return;
             }
-        } else if (!ctx.session.user) {//没有登录用户非法操作
-            if (ctx.request.url == routerUrl.logout) {//访问退出登录资源
-                ctx.status = 403;//拒绝访问
-                ctx.body = {
-                    success: false,
-                    code: 4003,
-                    message: "你没有权限访问这个资源，请登录"
-                }
-                return;
-            }
         }
         await next();
     }

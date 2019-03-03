@@ -26,10 +26,18 @@ const getModel = function (sequelize, DataTypes) {
                 type: DataTypes.STRING(255),
                 allowNull: false
             },
+            avatar_url: {
+                type: DataTypes.STRING(255),
+                allowNull: true,
+            },
             email: {
                 type: DataTypes.STRING(32),
                 allowNull: true,
                 unique: true
+            },
+            bg_img_url: {
+                type: DataTypes.STRING(255),
+                allowNull: true,
             },
             realname: {
                 type: DataTypes.STRING(32),
