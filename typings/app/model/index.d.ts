@@ -2,7 +2,7 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
-import ExportCard = require('../../../app/model/card');
+import ExportCart = require('../../../app/model/cart');
 import ExportComment = require('../../../app/model/comment');
 import ExportFruit = require('../../../app/model/fruit');
 import ExportFruitOrder = require('../../../app/model/fruit_order');
@@ -17,7 +17,7 @@ import ExportUserRole = require('../../../app/model/user_role');
 
 declare module 'sequelize' {
   interface Sequelize {
-    Card: ReturnType<typeof ExportCard>;
+    Cart: ReturnType<typeof ExportCart>;
     Comment: ReturnType<typeof ExportComment>;
     Fruit: ReturnType<typeof ExportFruit>;
     FruitOrder: ReturnType<typeof ExportFruitOrder>;

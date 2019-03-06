@@ -17,16 +17,18 @@ module.exports = app => {
 
     //reg
     router.get(routerUrl.reg, controller.register.index);
-    router.post(routerUrl.apiRegister, controller.register.register);
 
     //fruits
-
     router.get("/api/fruit/list", controller.fruits.list);
 
     //user
-    router.get("/api/user/info", controller.user.info);
-
+    router.get("/api/user", controller.user.info);
+    router.put("/api/user", controller.user.update);
+    router.post("/api/user",controller.user.create);
     //upload
     router.post("/api/upload/img", controller.upload.img);
+
+    //cart
+    router.get("/api/cart/carts",controller.cart.carts);
 };
 

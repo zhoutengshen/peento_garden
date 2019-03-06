@@ -46,11 +46,10 @@ class Upload extends Controller {
         }
         ctx.body = {
             success:true,
-            avatarUrl:armUrl,
+            url:armUrl,
             code:2001,
             msg:"上传成功"
         }
-
     }
 
     getDirect(result, extname) {

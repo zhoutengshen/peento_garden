@@ -2,6 +2,7 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
+import ExportCart = require('../../../app/controller/cart');
 import ExportFruits = require('../../../app/controller/fruits');
 import ExportHome = require('../../../app/controller/home');
 import ExportLogin = require('../../../app/controller/login');
@@ -12,6 +13,7 @@ import ExportUser = require('../../../app/controller/user');
 
 declare module 'egg' {
   interface IController {
+    cart: ExportCart;
     fruits: ExportFruits;
     home: ExportHome;
     login: ExportLogin;

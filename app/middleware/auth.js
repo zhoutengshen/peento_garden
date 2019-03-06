@@ -2,6 +2,8 @@ const loginAuthUrls = [//需要登录权限的url
     "/api/user/info",
     "/api/logout",
     "/api/upload/img",
+    "/api/user/update",
+    "/api/cart/carts",
 ]
 module.exports = options => {
     return async (ctx, next) => {
