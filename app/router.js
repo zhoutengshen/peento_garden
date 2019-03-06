@@ -30,5 +30,8 @@ module.exports = app => {
 
     //cart
     router.get("/api/cart/carts",controller.cart.carts);
+    router.post("/api/cart/carts",controller.cart.addCarts);
+    router.put("/api/cart/carts",controller.cart.updateCarts);
+    router.del("/api/cart/carts",controller.cart.delCart);
 };
 

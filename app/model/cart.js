@@ -2,11 +2,6 @@
 'use strict';
 const getModel = function (sequelize, DataTypes) {
     return sequelize.define('card', {
-        id: {
-            type: DataTypes.INTEGER(10),
-            allowNull: false,
-            primaryKey: true,
-        },
         user_id: {
             type: DataTypes.INTEGER(10),
             allowNull: false,
@@ -44,10 +39,9 @@ const getModel = function (sequelize, DataTypes) {
             type: DataTypes.STRING(5),
             allowNull: false,
         },
-        discount: {
-            type: DataTypes.INTEGER(2),
-            allowNull: false,
-            defaultValue: '10',
+        original_price: {
+            type: DataTypes.DECIMAL,
+            allowNull: true,
         },
         created_at: {
             type: DataTypes.DATE,
