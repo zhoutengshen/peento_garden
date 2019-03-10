@@ -101,7 +101,7 @@ class Login extends Controller {
                 location: "/",
                 user: {
                     username: user.username,
-                    avatarUrl: user.avatar_url
+                    avatarUrl: user.avatar_url,
                 }
             }
         }

@@ -31,6 +31,11 @@ const getModel = function (sequelize, DataTypes) {
             type: DataTypes.STRING(32),
             allowNull: true,
         },
+        select: {
+            type: DataTypes.INTEGER(1),
+            allowNull: false,
+            defaultValue: '0'
+        },
         price: {
             type: DataTypes.DECIMAL,
             allowNull: false,

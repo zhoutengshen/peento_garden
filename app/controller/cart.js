@@ -4,20 +4,19 @@ class Cart extends Controller {
     async carts() {
         const {ctx} = this;
         const {model} = ctx;
-        const carts = await model.Cart.findAll();
-        if (!!carts) {
-            ctx.body = {
-                success: true,
-                msg: "获取购物车成功",
-                code: 2001,
-                carts: carts,
+        const user = ctx.session.user;
+        const userId = user.id;
+        console.log(userId);
+        const carts = await model.Cart.findAll({
+            where: {
+                "user_id": userId
             }
-        } else {
-            ctx.body = {
-                success: false,
-                msg: "获取购物车失败",
-                code: 4001,
-            }
+        });
+        ctx.body = {
+            success: true,
+            msg: "获取购物车成功",
+            code: 2001,
+            carts: carts,
         }
     }
 
@@ -85,16 +84,17 @@ class Cart extends Controller {
 
     async updateCarts() {
         const {ctx} = this;
-        const {id, num} = ctx.request.body;
+        const {id, values} = ctx.request.body;
         const {model} = ctx;
-        if (num <= 0) {
+        if (values.num && values.num < 0 && values.num != -1) {
             ctx.body = {
                 success: false,
                 msg: "输入不不能小于0"
             }
+            return;
         }
         const result = model.Cart.update({
-            num
+            ...values
         }, {
             where: {
                 id,
@@ -116,8 +116,36 @@ class Cart extends Controller {
 
     async delCart() {
         const {ctx} = this;
-        console.log(ctx.request);
+        const id = ctx.params.id;
+        if (id) {
+            const {model} = ctx;
+            const count = model.Cart.destroy({
+                where: {
+                    id
+                }
+            });
+            if (count > 0) {
+                ctx.body = {
+                    success: true,
+                    msg: "移除成功",
+                    code: 2001,
+                    count
+                }
+            } else {
+                ctx.body = {
+                    success: true,
+                    msg: "0行受影响",
+                    code: 2001,
+                }
+            }
+        } else {
+            ctx.body = {
+                success: false,
+                msg: "id为空"
+            }
+        }
     }
+
 }
 
 module.exports = Cart;

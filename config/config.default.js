@@ -27,7 +27,7 @@ module.exports = appInfo => {
         mode: 'file',
     };
     config.static = {//静态资源配置
-        prefix: '/public/',//请求前缀
+        prefix: '/',//请求前缀
         dir: [path.join(appInfo.baseDir, 'public')]//文件储存的位置
     };
     //视图引擎配置

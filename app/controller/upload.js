@@ -26,7 +26,7 @@ class Upload extends Controller {
                 });
                 source.on("end", () => {
                     let armUrl = this.getDirect(result, path.extname(file.filename));
-                    let fullFileName = path.join(this.config.baseDir, armUrl);
+                    let fullFileName = path.join(this.config.baseDir,"/public", armUrl);
                     const target = fs.createWriteStream(fullFileName);
                     target.write(result);
                     resolve(armUrl);
@@ -66,7 +66,7 @@ class Upload extends Controller {
         fsHash.update(result);
         let md5Str = fsHash.digest('hex');
         console.log("文件的MD5是：%s", md5Str);
-        let fileName = path.join("/public/img", dateStr, md5Str + extname);
+        let fileName = path.join("/img", dateStr, md5Str + extname);
         return fileName;
     }
 }
