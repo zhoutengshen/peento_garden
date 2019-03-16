@@ -1,16 +1,17 @@
+'use strict';
 const Controller = require('egg').Controller;
 
 class Fruit extends Controller {
     async list() {
-        const {ctx} = this;
+        const { ctx } = this;
         try {
-            const {offset = 0, limit = 10} = ctx.request.query;
+            const { offset = 0, limit = 10 } = ctx.request.query;
             ctx.logger.debug(`\r\n offset:${offset},limit:${limit}`);
-            let fruitList = await ctx.model.Fruit.findAll({
+            const fruitList = await ctx.model.Fruit.findAll({
                 limit: parseInt(limit),
                 offset: parseInt(offset),
             });
-            let result = fruitList.map(fruit => {
+            const result = fruitList.map(fruit => {
                 return {
 
                     id: fruit.id,
@@ -21,13 +22,13 @@ class Fruit extends Controller {
                     unit: fruit.unit,
                     buyerCount: fruit.buyer_count,
                     fruitImgUrl: fruit.fruit_img_url,
-                }
-            })
+                };
+            });
             ctx.body = {
                 success: true,
                 fruits: result,
                 code: 2001,
-                msg: "获取成功",
+                msg: '获取成功',
             };
             return;
         } catch (e) {
@@ -35,7 +36,7 @@ class Fruit extends Controller {
                 success: false,
                 fruits: [],
                 code: 5001,
-                msg: "获取失败",
+                msg: '获取失败',
             };
         }
     }

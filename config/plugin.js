@@ -7,7 +7,7 @@ exports.sequelize = {
 // 开启视图渲染
 exports.view = {
     enable: true,
-    package: 'egg-view'
+    package: 'egg-view',
 };
 // 使用ejs视图引擎
 exports.ejs = {

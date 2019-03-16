@@ -1,15 +1,16 @@
-const {Controller} = require("egg")
+'use strict';
+const { Controller } = require('egg');
 
 class User extends Controller {
     async info() {
-        const {ctx} = this;
-        if (!!ctx.session.user) {
+        const { ctx } = this;
+        if (ctx.session.user) {
             const user = ctx.session.user;
             const userId = user.id;
             const newUser = await ctx.model.User.findOne({
                 where: {
                     id: userId,
-                }
+                },
             });
             ctx.session.user = newUser;
             ctx.body = {
@@ -26,116 +27,116 @@ class User extends Controller {
                     username: newUser.username,
                 },
                 code: 20001,
-                msg: "获取用户数据成功"
-            }
+                msg: '获取用户数据成功',
+            };
         } else {
             ctx.body = {
                 success: false,
                 code: 40006,
-                msg: "获取用户数据失败"
-            }
+                msg: '获取用户数据失败',
+            };
         }
 
     }
 
-    async updateMobile(){
-        const  {ctx} = this;
-        const {newMobileNum,mobileCode} = ctx.request.body;
+    async updateMobile() {
+        const { ctx } = this;
+        const { mobileCode } = ctx.request.body;
         const user = ctx.session.user;
-        if(!user){
+        if (!user) {
             ctx.body = {
-                success:false,
-                msg:"请登录",
-                code:4006
-            }
-            return
+                success: false,
+                msg: '请登录',
+                code: 4006,
+            };
+            return;
         }
         const mobileNum = user.mobile;
-        if(ctx.session.lastMobileCode[mobileNum]){
+        if (ctx.session.lastMobileCode[mobileNum]) {
             ctx.body = {
-                success:false,
-                msg:"先获取验证码",
-                code:4006
+                success: false,
+                msg: '先获取验证码',
+                code: 4006,
             };
-            return
-        }else{
-            const code = ctx.session.lastMobileCode[mobileNum].mobileCode;
-            if(mobileCode == code){
-
-            }
+            return;
         }
+        const code = ctx.session.lastMobileCode[mobileNum].mobileCode;
+        if (mobileCode == code) {
+
+        }
+
 
     }
 
     async update() {
-        const {ctx} = this;
+        const { ctx } = this;
         const user = ctx.session.user;
         const id = user.id;
         console.log(id);
-        const {values} = ctx.request.body;
-        const {model} = ctx;
+        const { values } = ctx.request.body;
+        const { model } = ctx;
         await model.User.update({
-            ...values
+            ...values,
         }, {
             where: {
-                id
+                id,
             },
-        }).then(result => {//array
+        }).then(result => { // array
             if (result.length > 0) {
                 ctx.body = {
                     success: true,
                     code: 20001,
-                    msg: "修改用户数据成功"
-                }
+                    msg: '修改用户数据成功',
+                };
             } else {
                 ctx.body = {
                     success: false,
-                    msg: "保存用户数据失败",
+                    msg: '保存用户数据失败',
                     code: 4006,
-                }
+                };
             }
         }).catch(() => {
             ctx.body = {
                 success: false,
-                msg: "保存用户数据出错",
+                msg: '保存用户数据出错',
                 code: 5006,
-            }
+            };
         });
 
     }
 
     async create() {
-        const {ctx} = this;
-        const {mobileNum, password, mobileCode} = ctx.request.body;
+        const { ctx } = this;
+        const { mobileNum, password, mobileCode } = ctx.request.body;
         ctx.logger.debug(`\r\n注册表单数据：${ctx.request.body}`);
         try {
-            this.dataValidate({mobileCode, password, mobileNum});
+            this.dataValidate({ mobileCode, password, mobileNum });
         } catch (e) {
             ctx.body = {
                 success: false,
                 code: 40006,
                 msg: '提交数据有误',
-            }
+            };
             return;
         }
 
-        //在session中取出验证码；
+        // 在session中取出验证码；
         try {
             if (!ctx.session.lastMobileCode[mobileNum]) {
                 ctx.body = {
                     success: false,
                     code: 40006,
                     msg: '请先获取验证码',
-                }
+                };
                 return;
             }
-            let code = ctx.session.lastMobileCode[mobileNum].mobileCode;
+            const code = ctx.session.lastMobileCode[mobileNum].mobileCode;
             if (code != mobileCode) {
                 ctx.body = {
                     success: false,
                     code: 40006,
                     msg: '验证码不匹配',
-                }
+                };
                 return;
             }
         } catch (e) {
@@ -144,24 +145,24 @@ class User extends Controller {
                 success: false,
                 code: 50001,
                 msg: '未知错误',
-            }
+            };
             return;
         }
         try {
             const ip = ctx.req.connection.remoteAddress;
-            let user = await ctx.service.user.create({mobile: mobileNum, password: password, ip});
-            if (!!user) {
+            const user = await ctx.service.user.create({ mobile: mobileNum, password, ip });
+            if (user) {
                 ctx.body = {
                     success: true,
                     code: 20001,
                     msg: '注册成功',
-                }
+                };
             } else {
                 ctx.body = {
                     success: false,
                     code: 40006,
                     msg: '注册失败，未知错误',
-                }
+                };
             }
         } catch (e) {
             ctx.logger.info(`\r\n注册表单数据错误信息：${e}`);
@@ -170,7 +171,7 @@ class User extends Controller {
                 code: 50001,
                 msg: '注册失败，未知错误',
 
-            }
+            };
         }
     }
 
@@ -192,7 +193,7 @@ class User extends Controller {
                 required: true,
                 format: /^1[34578]\d{9}$/,
             },
-        }
+        };
     }
 }
 

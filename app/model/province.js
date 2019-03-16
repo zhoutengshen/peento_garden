@@ -1,15 +1,15 @@
 /* jshint indent: 2 */
-
-const getModel = function (sequelize, DataTypes) {
+'use strict';
+const getModel = function(sequelize, DataTypes) {
     return sequelize.define('dic_province', {
         id: {
             type: DataTypes.INTEGER(11),
             allowNull: false,
-            primaryKey: true
+            primaryKey: true,
         },
         provinceID: {
             type: DataTypes.STRING(6),
-            allowNull: true
+            allowNull: true,
         },
         created_at: {
             type: DataTypes.DATE,
@@ -21,14 +21,14 @@ const getModel = function (sequelize, DataTypes) {
         },
         province: {
             type: DataTypes.STRING(40),
-            allowNull: true
-        }
+            allowNull: true,
+        },
     }, {
-        tableName: 'dic_province'
+        tableName: 'dic_province',
     });
 };
 module.exports = app => {
     const sequelize = app.model;
-    const {INTEGER, DATE, STRING, DECIMAL} = app.Sequelize;
-    return getModel(sequelize, {INTEGER, DATE, STRING, DECIMAL});
+    const { INTEGER, DATE, STRING, DECIMAL } = app.Sequelize;
+    return getModel(sequelize, { INTEGER, DATE, STRING, DECIMAL });
 };

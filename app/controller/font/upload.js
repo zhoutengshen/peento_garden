@@ -1,32 +1,33 @@
-const {Controller} = require("egg");
+'use strict';
+const { Controller } = require('egg');
 const fs = require('mz/fs');
 // const pump = require('mz-modules/pump');
-const path = require("path");
+const path = require('path');
 const crypto = require('crypto');
 
 class Upload extends Controller {
     async img() {
-        const {ctx} = this;
+        const { ctx } = this;
         const file = ctx.request.files[0];
         if (!file) {
             ctx.body = {
                 success: false,
-                msg: "文件上传失败",
-            }
+                msg: '文件上传失败',
+            };
             return;
         }
-        let armUrl = ""
+        let armUrl = '';
         try {
-            //这里将非async转换为asunc
-            armUrl = await (new Promise((resolve) => {
+            // 这里将非async转换为asunc
+            armUrl = await (new Promise(resolve => {
                 const source = fs.createReadStream(file.filepath);
                 let result = new Buffer(0);
-                source.on("data", (chunk) => {
-                    result = Buffer.concat([result, chunk]);
+                source.on('data', chunk => {
+                    result = Buffer.concat([ result, chunk ]);
                 });
-                source.on("end", () => {
-                    let armUrl = this.getDirect(result, path.extname(file.filename));
-                    let fullFileName = path.join(this.config.baseDir,"/public", armUrl);
+                source.on('end', () => {
+                    const armUrl = this.getDirect(result, path.extname(file.filename));
+                    const fullFileName = path.join(this.config.baseDir, armUrl);
                     const target = fs.createWriteStream(fullFileName);
                     target.write(result);
                     resolve(armUrl);
@@ -37,36 +38,36 @@ class Upload extends Controller {
             ctx.body = {
                 success: false,
                 code: 4001,
-                msg: "上传失败"
-            }
+                msg: '上传失败',
+            };
             return;
         } finally {
             // delete those request tmp files
             await ctx.cleanupRequestFiles();
         }
         ctx.body = {
-            success:true,
-            url:armUrl,
-            code:2001,
-            msg:"上传成功"
-        }
+            success: true,
+            url: armUrl,
+            code: 2001,
+            msg: '上传成功',
+        };
     }
 
     getDirect(result, extname) {
-        let date = new Date();
+        const date = new Date();
         const dateStr = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
-        let dir = path.join(this.config.baseDir,
-            "/public/img",
+        const dir = path.join(this.config.baseDir,
+            '/public/img',
             dateStr);
-        let exist = fs.existsSync(dir);
+        const exist = fs.existsSync(dir);
         if (!exist) {
             fs.mkdirSync(dir);
         }
-        let fsHash = crypto.createHash('md5');
+        const fsHash = crypto.createHash('md5');
         fsHash.update(result);
-        let md5Str = fsHash.digest('hex');
-        console.log("文件的MD5是：%s", md5Str);
-        let fileName = path.join("/img", dateStr, md5Str + extname);
+        const md5Str = fsHash.digest('hex');
+        console.log('文件的MD5是：%s', md5Str);
+        const fileName = path.join('/public/img', dateStr, md5Str + extname);
         return fileName;
     }
 }

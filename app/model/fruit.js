@@ -1,12 +1,7 @@
 /* jshint indent: 2 */
 'use strict';
-const getModel = function (sequelize, DataTypes) {
+const getModel = function(sequelize, DataTypes) {
     return sequelize.define('fruit', {
-        // id: {
-        //     type: DataTypes.INTEGER(10),
-        //     allowNull: false,
-        //     primaryKey: true,
-        // },
         fruit_img_url: {
             type: DataTypes.STRING(255),
             allowNull: false,
@@ -19,7 +14,7 @@ const getModel = function (sequelize, DataTypes) {
             type: DataTypes.DECIMAL,
             allowNull: false,
         },
-        original_price:{
+        original_price: {
             type: DataTypes.DECIMAL,
             allowNull: false,
         },
@@ -83,6 +78,6 @@ const getModel = function (sequelize, DataTypes) {
 };
 module.exports = app => {
     const sequelize = app.model;
-    const {INTEGER, DATE, STRING, DECIMAL, TEXT} = app.Sequelize;
-    return getModel(sequelize, {INTEGER, DATE, STRING, DECIMAL, TEXT});
+    const { INTEGER, DATE, STRING, DECIMAL, TEXT } = app.Sequelize;
+    return getModel(sequelize, { INTEGER, DATE, STRING, DECIMAL, TEXT });
 };

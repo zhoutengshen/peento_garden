@@ -1,6 +1,6 @@
 /* jshint indent: 2 */
 'use strict';
-const getModel = function (sequelize, DataTypes) {
+const getModel = function(sequelize, DataTypes) {
     return sequelize.define('card', {
         user_id: {
             type: DataTypes.INTEGER(10),
@@ -34,7 +34,7 @@ const getModel = function (sequelize, DataTypes) {
         select: {
             type: DataTypes.INTEGER(1),
             allowNull: false,
-            defaultValue: '0'
+            defaultValue: '0',
         },
         price: {
             type: DataTypes.DECIMAL,
@@ -71,6 +71,6 @@ const getModel = function (sequelize, DataTypes) {
 };
 module.exports = app => {
     const sequelize = app.model;
-    const {INTEGER, DATE, STRING, DECIMAL} = app.Sequelize;
-    return getModel(sequelize, {INTEGER, DATE, STRING, DECIMAL});
+    const { INTEGER, DATE, STRING, DECIMAL } = app.Sequelize;
+    return getModel(sequelize, { INTEGER, DATE, STRING, DECIMAL });
 };

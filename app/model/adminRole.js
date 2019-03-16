@@ -1,11 +1,19 @@
 /* jshint indent: 2 */
 'use strict';
 const getModel = function(sequelize, DataTypes) {
-    return sequelize.define('role_func', {
+    return sequelize.define('admin_role', {
         id: {
             type: DataTypes.STRING(32),
             allowNull: false,
             primaryKey: true,
+        },
+        admin_id: {
+            type: DataTypes.STRING(32),
+            allowNull: false,
+            references: {
+                model: 'admin',
+                key: 'id',
+            },
         },
         role_id: {
             type: DataTypes.STRING(32),
@@ -15,15 +23,7 @@ const getModel = function(sequelize, DataTypes) {
                 key: 'id',
             },
         },
-        func_id: {
-            type: DataTypes.STRING(32),
-            allowNull: false,
-            references: {
-                model: 'func',
-                key: 'id',
-            },
-        },
-        createed_at: {
+        created_at: {
             type: DataTypes.DATE,
             allowNull: true,
         },
@@ -32,12 +32,12 @@ const getModel = function(sequelize, DataTypes) {
             allowNull: true,
         },
     }, {
-        tableName: 'role_func',
+        tableName: 'admin_role',
     });
 };
+
 module.exports = app => {
     const sequelize = app.model;
-    const { INTEGER, DATE, STRING, DECIMAL } = app.Sequelize;
-    return getModel(sequelize, { INTEGER, DATE, STRING, DECIMAL });
+    const { INTEGER, DATE, STRING } = app.Sequelize;
+    return getModel(sequelize, { INTEGER, DATE, STRING });
 };
-

@@ -1,9 +1,10 @@
-const {Service} = require("egg");
+'use strict';
+const { Service } = require('egg');
 
 class User extends Service {
     async findAccPass(queryObj) {
-        const {ctx} = this;
-        const {model} = ctx;
+        const { ctx } = this;
+        const { model } = ctx;
         const user = await model.User.findOne({
             where: {
                 ...queryObj,
@@ -13,40 +14,41 @@ class User extends Service {
     }
 
     async findAccByMobile(mobileNum) {
-        const {ctx} = this;
-        const {model} = ctx;
+        const { ctx } = this;
+        const { model } = ctx;
         const user = await model.User.findOne({
             where: {
-                mobile: mobileNum
-            }
+                mobile: mobileNum,
+            },
         });
         return user;
     }
 
     async findAccByEmail(email) {
-        const {ctx} = this;
-        const {model} = ctx;
+        const { ctx } = this;
+        const { model } = ctx;
         const user = await model.User.findOne({
             where: {
-                email
-            }
+                email,
+            },
         });
         return user;
     }
 
-    async findAccByUserName(userName) {
+
+    async findAccByUserName() {//eslint-disable-line
 
     }
 
     async create(user) {
-        const {ctx} = this;
-        const {model} = ctx;
-        user.account = Math.random().toString().slice(-10);//随机账号
+        const { ctx } = this;
+        const { model } = ctx;
+        user.account = Math.random().toString().slice(-10);// 随机账号
         user.status = 1;
-        let timeStamp = new Date().getTime();
-        user.created_at = timeStamp
+        const timeStamp = new Date().getTime();
+        user.created_at = timeStamp;
         user.updated_at = timeStamp;
-        return await model.User.create({...user});
+        return await model.User.create({ ...user });
     }
 }
 

@@ -3,6 +3,8 @@
 
 import 'egg';
 import ExportAddress = require('../../../app/model/address');
+import ExportAdmin = require('../../../app/model/admin');
+import ExportAdminRole = require('../../../app/model/adminRole');
 import ExportArea = require('../../../app/model/area');
 import ExportCart = require('../../../app/model/cart');
 import ExportCity = require('../../../app/model/city');
@@ -16,11 +18,12 @@ import ExportProvince = require('../../../app/model/province');
 import ExportRole = require('../../../app/model/role');
 import ExportRoleFunc = require('../../../app/model/role_func');
 import ExportUser = require('../../../app/model/user');
-import ExportUserRole = require('../../../app/model/user_role');
 
 declare module 'sequelize' {
   interface Sequelize {
     Address: ReturnType<typeof ExportAddress>;
+    Admin: ReturnType<typeof ExportAdmin>;
+    AdminRole: ReturnType<typeof ExportAdminRole>;
     Area: ReturnType<typeof ExportArea>;
     Cart: ReturnType<typeof ExportCart>;
     City: ReturnType<typeof ExportCity>;
@@ -34,6 +37,5 @@ declare module 'sequelize' {
     Role: ReturnType<typeof ExportRole>;
     RoleFunc: ReturnType<typeof ExportRoleFunc>;
     User: ReturnType<typeof ExportUser>;
-    UserRole: ReturnType<typeof ExportUserRole>;
   }
 }

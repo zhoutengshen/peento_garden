@@ -1,29 +1,30 @@
+
 /* jshint indent: 2 */
 'use strict';
 const getModel = function(sequelize, DataTypes) {
-    return sequelize.define('role_func', {
+    return sequelize.define('admin', {
         id: {
             type: DataTypes.STRING(32),
             allowNull: false,
             primaryKey: true,
         },
-        role_id: {
+        introduction: {
+            type: DataTypes.STRING(64),
+            allowNull: true,
+        },
+        avatar: {
+            type: DataTypes.STRING(128),
+            allowNull: true,
+        },
+        username: {
             type: DataTypes.STRING(32),
             allowNull: false,
-            references: {
-                model: 'role',
-                key: 'id',
-            },
         },
-        func_id: {
+        password: {
             type: DataTypes.STRING(32),
-            allowNull: false,
-            references: {
-                model: 'func',
-                key: 'id',
-            },
+            allowNull: true,
         },
-        createed_at: {
+        created_at: {
             type: DataTypes.DATE,
             allowNull: true,
         },
@@ -32,8 +33,8 @@ const getModel = function(sequelize, DataTypes) {
             allowNull: true,
         },
     }, {
-        tableName: 'role_func',
-    });
+        tableName: 'admin',
+    }); 1;
 };
 module.exports = app => {
     const sequelize = app.model;

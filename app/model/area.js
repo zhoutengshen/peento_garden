@@ -1,14 +1,14 @@
 /* jshint indent: 2 */
 'use strict';
-const getModel = function (sequelize, DataTypes) {
+const getModel = function(sequelize, DataTypes) {
     return sequelize.define('dic_area', {
         areaID: {
             type: DataTypes.STRING(50),
-            allowNull: true
+            allowNull: true,
         },
         area: {
             type: DataTypes.STRING(60),
-            allowNull: true
+            allowNull: true,
         },
         created_at: {
             type: DataTypes.DATE,
@@ -20,14 +20,14 @@ const getModel = function (sequelize, DataTypes) {
         },
         father: {
             type: DataTypes.STRING(6),
-            allowNull: true
-        }
+            allowNull: true,
+        },
     }, {
-        tableName: 'dic_area'
+        tableName: 'dic_area',
     });
 };
 module.exports = app => {
     const sequelize = app.model;
-    const {INTEGER, DATE, STRING, DECIMAL} = app.Sequelize;
-    return getModel(sequelize, {INTEGER, DATE, STRING, DECIMAL});
+    const { INTEGER, DATE, STRING, DECIMAL } = app.Sequelize;
+    return getModel(sequelize, { INTEGER, DATE, STRING, DECIMAL });
 };
