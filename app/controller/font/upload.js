@@ -23,7 +23,7 @@ class Upload extends Controller {
                 const source = fs.createReadStream(file.filepath);
                 let result = new Buffer(0);
                 source.on('data', chunk => {
-                    result = Buffer.concat([ result, chunk ]);
+                    result = Buffer.concat([result, chunk]);
                 });
                 source.on('end', () => {
                     const armUrl = this.getDirect(result, path.extname(file.filename));

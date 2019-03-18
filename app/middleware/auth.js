@@ -35,7 +35,8 @@ module.exports = options => {//eslint-disable-line
         if (loginAuthUrls.some(url => url === reqUrl)) { // 访问需要权限的url
             console.log('访问需要登录权限的url：' + reqUrl);
             const user = ctx.session.user;
-            if (!user) {
+            const admin = ctx.session.admin;
+            if (!user && !admin) {
                 ctx.body = {
                     success: false,
                     msg: '访问的路径需要登录权限',
@@ -53,7 +54,6 @@ module.exports = options => {//eslint-disable-line
                     // /是否有这个权限
                     //
                 } else {
-
                 }
             }
         }

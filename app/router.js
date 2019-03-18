@@ -18,6 +18,7 @@ module.exports = app => {
     router.get(routerUrl.reg, controller.font.register.index);
     // fruits
     router.get('/api/fruit/list', controller.font.fruits.list);
+    router.get('/api/fruit/details', controller.font.fruits.fruitsDetails);
     // user
     router.get('/api/user', controller.font.user.info);
     router.put('/api/user', controller.font.user.update);
@@ -49,6 +50,9 @@ module.exports = app => {
     router.put('/api-admin/user', controller.admin.user.update);
     router.post('/api-admin/user', controller.admin.user.create);
     router.del('/api-admin/user/:id', controller.admin.user.remove);
+
+    // 修改水果信息
+    router.put('/api-admin/fruit', controller.admin.fruit.update);
 
 };
 

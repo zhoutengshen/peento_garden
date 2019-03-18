@@ -2,6 +2,7 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
+import ExportAdminFruit = require('../../../app/controller/admin/fruit');
 import ExportAdminLogin = require('../../../app/controller/admin/login');
 import ExportAdminUser = require('../../../app/controller/admin/user');
 import ExportFontAddress = require('../../../app/controller/font/address');
@@ -19,6 +20,7 @@ import ExportFontUser = require('../../../app/controller/font/user');
 declare module 'egg' {
   interface IController {
     admin: {
+      fruit: ExportAdminFruit;
       login: ExportAdminLogin;
       user: ExportAdminUser;
     }
